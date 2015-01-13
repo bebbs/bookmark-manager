@@ -1,7 +1,8 @@
 require 'sinatra/base'
 require 'data_mapper'
-require 'link'
-require 'tag'
+require_relative '../lib/link.rb'
+require_relative '../lib/tag.rb'
+
 
 class BookmarkManager < Sinatra::Base
 
@@ -25,6 +26,12 @@ class BookmarkManager < Sinatra::Base
     end
     Link.create(:url => url, :title => title, :tags => tags)
     redirect '/'
+  end
+
+  get '/tags/:text' do
+    tag = Tag.first(:text => params[:text])
+    @links = tag ? tag.links : []
+    erb :index
   end
 
 end
