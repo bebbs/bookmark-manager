@@ -4,19 +4,16 @@ require 'bcrypt'
 require_relative '../lib/link.rb'
 require_relative '../lib/tag.rb'
 require_relative '../lib/user.rb'
+require_relative 'database_setup'
+require_relative 'helper_module'
 
 
 class BookmarkManager < Sinatra::Base
 
+  include HelperModule
+
   enable :sessions
   set :session_secret, 'super secret'
-
-  env = ENV['RACK_ENV'] || 'development'
-
-  DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
-  require_relative '../lib/link.rb'
-  DataMapper.finalize
-  DataMapper.auto_upgrade!
 
   get '/' do
     @links= Link.all
@@ -47,12 +44,6 @@ class BookmarkManager < Sinatra::Base
     user = User.create(:email => params[:email], :password => params[:password])
     session[:user_id] = user.id
     redirect '/'
-  end
-
-  helpers do
-    def current_user
-      @current_user ||= User.get(session[:user_id]) if session[:user_id]
-    end
   end
 
 end
