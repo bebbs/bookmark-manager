@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "User adds a new link" do
+feature "Adding bookmarks" do
   scenario "when browsing the homepage" do
     expect(Link.count).to eq 0
     visit '/'
@@ -17,8 +17,8 @@ feature "User adds a new link" do
              'Makers Academy',
              ['education', 'ruby'])
     link = Link.first
-    expect(link.tags).to include('education')
-    expect(link.tags).to include('ruby')
+    expect(link.tags.map(&:text)).to include('education')
+    expect(link.tags.map(&:text)).to include('ruby')
   end
 
   def add_link(url, title, tags=[])

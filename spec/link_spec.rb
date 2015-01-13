@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Link do
   
-  context 'Demonstration of how datamapper works' do
+  context 'Links can' do
 
-    it 'should be created and then retrieved from the db' do
+    it 'be created and destroyed' do
       expect(Link.count).to eq 0
       Link.create(title: 'Makers Academy',
                   url: 'http://www.makersacademy.com')
