@@ -1,7 +1,9 @@
 require 'sinatra/base'
 require 'data_mapper'
+require 'bcrypt'
 require_relative '../lib/link.rb'
 require_relative '../lib/tag.rb'
+require_relative '../lib/user.rb'
 
 
 class BookmarkManager < Sinatra::Base
@@ -32,6 +34,15 @@ class BookmarkManager < Sinatra::Base
     tag = Tag.first(:text => params[:text])
     @links = tag ? tag.links : []
     erb :index
+  end
+
+  get '/users/new' do
+    erb :"users/new"
+  end
+
+  post '/users' do
+    User.create(:email => params[:email], :password => params[:password])
+    redirect '/'
   end
 
 end
