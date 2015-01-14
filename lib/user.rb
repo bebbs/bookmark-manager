@@ -11,6 +11,11 @@ class User
     self.password_digest = BCrypt::Password.create(password)
   end
 
+  def self.authenticate(email, password)
+    user = first(:email => email)
+    user && BCrypt::Password.new(user.password_digest) == password ? user : nil
+  end
+
   attr_reader :password
   attr_accessor :password_confirmation
   validates_confirmation_of :password
