@@ -1,18 +1,25 @@
-<body>
-  
-  <% if flash[:errors] && !flash[:errors].empty? %>
-    Sorry, there were the following problems with your registration:
-    <ul id="errors">
-      <% flash[:errors].each do |error| %>
-        <li><%= error %></li>
-      <% end %>
-    </ul>
-  <% end %>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/custom.css">
+  </head>
+  <body>
 
-  <% if current_user %>
-    Welcome, <%= current_user.email %>
-  <% end %>
+    <%= erb :"partials/header" %>
+    <% if flash[:notice] %>
+      <div id="notice">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
 
-  <%= yield %>
+    <% if flash[:errors] && !flash[:errors].empty? %>
+      Sorry, there were the following problems with your registration:
+      <ul id="errors">
+        <% flash[:errors].each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    <% end %>
 
-</body>
+    <%= yield %>
+  </body>

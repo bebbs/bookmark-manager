@@ -1,14 +1,32 @@
-<ul>
-  <% @links.each do |link| %>
-    <li><a href="<%= link.url %>"><%= link.title %></a></li>
-  <% end %>
-</ul>
+<div class="container">
+  <ul class="inner-container">
+    <% @links.each do |link| %>
+      <li class="links"><a href="<%= link.url %>">
+        <%= link.title %></a> - 
+        <em><%=link.url%></em>
+        <p>
+          <em>
+            <% link.tags.each do |tag| %>
+              <%= tag.text %>
+            <% end %>
+          </em>
+        </p>
+      </li>
+    <% end %>
+  </ul>
 
-<div id="new-link">
-  <form action="links" method="post">
-    Url: <input type="text" name="url">
-    Title: <input type="text" name="title">
-    Tags: <input type="text" name="tags">
-    <input type="submit" value ="Add link">
-  </form>
+  <div id="new-link" class="inner-container">
+    <form action="links" method="post">
+      <label class="input">
+        Url: <input type="text" name="url">
+      </label>
+      <label class="input">
+        Title: <input type="text" name="title">
+      </label>
+      <label class="input">
+        Tags: <input type="text" name="tags">
+      </label>
+      <input type="submit" class="btn-add" value ="Add link">
+    </form>
+  </div>
 </div>

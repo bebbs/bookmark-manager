@@ -6,13 +6,17 @@ require_relative '../lib/link.rb'
 require_relative '../lib/tag.rb'
 require_relative '../lib/user.rb'
 require_relative 'database_setup'
-require_relative 'helper_module'
+require_relative 'helpers/current_user'
 
 class BookmarkManager < Sinatra::Base
 
-  include HelperModule
+  include CurrentUser
 
   use Rack::Flash
+  use Rack::MethodOverride
+
+  set :public_dir, Proc.new {File.join(root, '..', 'public')}
+  set :public_folder, 'public'
 
   enable :sessions
   set :session_secret, 'super secret'
@@ -70,6 +74,12 @@ class BookmarkManager < Sinatra::Base
       flash[:errors] = ['The email or password is incorrect']
       erb :"sessions/new"
     end
+  end
+
+  delete '/sessions' do
+    flash[:notice] = 'Good bye!'
+    session[:user_id] = nil
+    redirect '/'
   end
 
 end

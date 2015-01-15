@@ -1,4 +1,6 @@
 require 'spec_helper'
+require_relative '../app/helpers/session'
+include SessionHelpers
 
 feature 'User logs out' do
   
