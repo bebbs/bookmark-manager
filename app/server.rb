@@ -52,6 +52,7 @@ class BookmarkManager < Sinatra::Base
                      :password => params[:password], 
                      :password_confirmation => params[:password_confirmation])
     if @user.save
+      flash[:notice] = "Welcome, #{@user.email}"
       session[:user_id] = @user.id
       redirect '/'
     else
@@ -68,6 +69,7 @@ class BookmarkManager < Sinatra::Base
     email, password = params[:email], params[:password]
     user = User.authenticate(email, password)
     if user
+      flash[:notice] = "Welcome, #{user.email}"
       session[:user_id] = user.id
       redirect '/'
     else

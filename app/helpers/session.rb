@@ -3,7 +3,9 @@ module SessionHelpers
     visit '/sessions/new'
     fill_in 'email', :with => email
     fill_in 'password', :with => password
-    click_button 'Sign in'
+    within('#signin-form') do
+      click_button 'Sign in'
+    end
   end
 
   def sign_up(email= "josh@test.com", password= "oranges", password_confirmation= "oranges")
@@ -12,6 +14,8 @@ module SessionHelpers
     fill_in :email, :with => email
     fill_in :password, :with => password
     fill_in :password_confirmation, :with => password_confirmation
-    click_button "Sign up"
+    within('#signup-form') do
+      click_button "Sign up"
+    end
   end
 end
